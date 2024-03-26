@@ -42,3 +42,40 @@ def contacts_new():
         return redirect("/contacts")
     else:
         return render_template("new.html", contact=Contact())
+
+
+@app.route("/contacts/<contact_id>")
+def contacts_view(contact_id=0):
+    contact = Contact.find(contact_id)
+    return render_template("show.html", contact=contact)
+
+
+@app.route("/contacts/<contact_id>/edit", methods=["GET"])
+def contacts_edit_get(contact_id=0):
+    contact = Contact.find(contact_id)
+    return render_template("edit.html", contact=contact)
+
+
+@app.route("/contacts/<contact_id>/edit", methods=["POST"])
+def contacts_edit_post(contact_id=0):
+    c = Contact.find(contact_id)
+    if c is not None:
+        c.update(
+            request.form["first_name"],
+            request.form["last_name"],
+            request.form["phone"],
+            request.form["email"],
+        )
+        if c.save():
+            flash("Updated Contact!")
+            return redirect("/contacts/" + str(contact_id))
+    return render_template("edit.html", contact=c)
+
+
+@app.route("/contacts/<contact_id>/delete", methods=["POST"])
+def contacts_delete(contact_id=0):
+    contact = Contact.find(contact_id)
+    if contact is not None:
+        contact.delete()
+        flash("Deleted Contact!")
+    return redirect("/contacts")

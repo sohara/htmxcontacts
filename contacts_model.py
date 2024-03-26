@@ -13,6 +13,12 @@ class Contact:
         self.email = email
         self.errors = {}
 
+    def update(self, first, last, phone, email):
+        self.first = first
+        self.last = last
+        self.phone = phone
+        self.email = email
+
     def validate(self):
         if not self.email:
             self.errors["email"] = "Email Required"
@@ -39,6 +45,10 @@ class Contact:
             Contact.db[self.id] = self
         Contact.save_db()
         return True
+
+    def delete(self):
+        del Contact.db[self.id]
+        Contact.save_db()
 
     @classmethod
     def all(cls):
@@ -72,3 +82,12 @@ class Contact:
                 result.append(c)
 
         return result
+
+    @classmethod
+    def find(cls, id_) -> "Contact | None":
+        id_ = int(id_)
+        c = cls.db.get(id_)
+        if c is not None:
+            c.errors = {}
+
+        return c
