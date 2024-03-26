@@ -1,6 +1,8 @@
 import json
 import logging
 
+PAGE_SIZE = 5
+
 
 class Contact:
     db = {}
@@ -51,8 +53,11 @@ class Contact:
         Contact.save_db()
 
     @classmethod
-    def all(cls):
-        return list(cls.db.values())
+    def all(cls, page=1):
+        page = int(page)
+        start = (page - 1) * PAGE_SIZE
+        end = start + PAGE_SIZE
+        return list(cls.db.values())[start:end]
 
     @classmethod
     def load_db(cls):
