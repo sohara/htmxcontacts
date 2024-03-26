@@ -134,5 +134,29 @@
     "phone": null,
     "email": "restexample2@example.com",
     "errors": {}
+  },
+  {
+    "id": 20,
+    "first": "Sean",
+    "last": "O'Hara",
+    "phone": "5148396668",
+    "email": "sohara@sohara.com",
+    "errors": {}
+  },
+  {
+    "id": 21,
+    "first": "Jack",
+    "last": "Seamus",
+    "phone": "2342352342",
+    "email": "seamus@yahoo.ca",
+    "errors": {}
+  },
+  {
+    "id": 22,
+    "first": "Mika",
+    "last": "Toso",
+    "phone": "345345235",
+    "email": "mika@toso.co.jp",
+    "errors": {}
   }
 ]
