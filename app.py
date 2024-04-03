@@ -87,7 +87,11 @@ def contacts_delete(contact_id=0):
     contact = Contact.find(contact_id)
     if contact is not None:
         contact.delete()
-        flash("Deleted Contact!")
+        if request.headers.get("HX-Trigger") == "delete-btn":
+            flash("Deleted Contact!")
+            return redirect("/contacts", 303)
+        else:
+            return ""
     return redirect("/contacts", 303)
 
 
