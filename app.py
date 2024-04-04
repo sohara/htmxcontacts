@@ -1,6 +1,5 @@
-from types import MethodDescriptorType
-from flask import Flask, redirect, request, render_template, flash
-from contacts_model import Contact
+from flask import Flask, redirect, request, render_template, flash, send_file
+from contacts_model import Contact, Archiver
 
 Contact.load_db()
 
@@ -24,7 +23,29 @@ def contacts():
     else:
         contacts_set = Contact.all(page)
 
-    return render_template("index.html", contacts=contacts_set, page=page)
+    return render_template(
+        "index.html", contacts=contacts_set, page=page, archiver=Archiver.get()
+    )
+
+
+@app.route("/contacts/archive", methods=["POST"])
+def start_archive():
+    archiver = Archiver.get()
+    archiver.run()
+    return render_template("archive-ui.html", archiver=archiver)
+
+
+@app.route("/contacts/archive", methods=["GET"])
+def archive_status():
+    archiver = Archiver.get()
+    archiver.run()
+    return render_template("archive-ui.html", archiver=archiver)
+
+
+@app.route("/contacts/archive/file", methods=["GET"])
+def archive_content():
+    manager = Archiver.get()
+    return send_file(manager.archive_file(), "archive.json", as_attachment=True)
 
 
 @app.route("/contacts/count")
