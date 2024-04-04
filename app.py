@@ -42,6 +42,13 @@ def archive_status():
     return render_template("archive-ui.html", archiver=archiver)
 
 
+@app.route("/contacts/archive", methods=["DELETE"])
+def reset_archive():
+    archiver = Archiver.get()
+    archiver.reset()
+    return render_template("archive-ui.html", archiver=archiver)
+
+
 @app.route("/contacts/archive/file", methods=["GET"])
 def archive_content():
     manager = Archiver.get()

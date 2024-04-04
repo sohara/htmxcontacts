@@ -15,8 +15,9 @@
     </div>
   </div>
   {% elif archiver.status() == "Complete" %}
-  <a hx-boost="false" href="/contacts/archive/file"
+  <a hx-boost="false" href="/contacts/archive/file" _="on load click() me"
     >Archive Ready! Click here to download. &downarrow;</a
   >
+  <button hx-delete="/contacts/archive">Clear Download</button>
   {% endif %}
 </div>
